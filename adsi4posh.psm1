@@ -311,3 +311,28 @@ function Get-ADSIGroupMemberEntry {
 				Get-ADSIReleation -property 'Member');
 	}
 }
+
+function Get-SidByDirectoryEntry {
+	[CmdletBinding()]
+	param (
+		[Parameter(ValueFromPipeline = $true)]
+		[System.DirectoryServices.DirectoryEntry]$directoryEntry
+	)
+	process {
+		$si = New-Object System.Security.Principal.SecurityIdentifier -ArgumentList $directoryEntry.objectSid[0], 0;
+		return $si.value;
+	}
+}
+
+function Get-NameBySid {
+	[CmdletBinding()]
+	param (
+		[Parameter(ValueFromPipeline = $true)]
+		[string]$sid
+	)
+	
+	process {
+		$si = New-Object System.Security.Principal.SecurityIdentifier -ArgumentList $sid;
+		return $si.Translate([System.Security.Principal.NTAccount]).value;
+	}
+}

@@ -69,14 +69,29 @@ function test10 {
 	$obj.GetType().FullName;
 	return $obj;
 }
+
+function test11 {
+	Write-Host "Test 11: Get-SidByDirectoryEntry";
+	Search-ADSI -filter '(sAMAccountName=sbt-chistyakov-vv)' -searchScope subtree | 
+		Get-ADSIDirectoryEntry |
+			Get-SidByDirectoryEntry;
+}
+
+function test12 {
+	Write-Host "Test 12: Get-NameBySid";
+	'sid' |
+	Get-NameBySid;
+}
  
-test1;
+#test1;
 #test2;
 #test3;
 #test4;
 #test5;
 #test6;
-#test7
-#test8
-test9
-test10
+#test7;
+#test8;
+#test9;
+#test10;
+test11;
+test12;
